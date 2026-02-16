@@ -26,7 +26,7 @@ This package requires `zod` as a peer dependency.
 ## Quick Start
 
 ```typescript
-import { handleRoute, httpOk } from "@workspace/api";
+import { handleRoute, httpOk } from "@lib/lean-api";
 
 export const GET = handleRoute(async ({ req }) => {
   return httpOk({ message: "Hello, World!" });
@@ -40,7 +40,7 @@ export const GET = handleRoute(async ({ req }) => {
 The simplest route handler without any validation:
 
 ```typescript
-import { handleRoute, httpOk } from "@workspace/api";
+import { handleRoute, httpOk } from "@lib/lean-api";
 
 export const GET = handleRoute(async ({ req }) => {
   const data = { message: "Success" };
@@ -54,7 +54,7 @@ Validate route parameters using `IdSchema` or `NumericalIdSchema`:
 
 ```typescript
 // Route: /api/users/[id] or /api/users/<id>
-import { handleRoute, httpOk, httpError, IdSchema } from "@workspace/api";
+import { handleRoute, httpOk, httpError, IdSchema } from "@lib/lean-api";
 
 export const GET = handleRoute(
   async ({ params }) => {
@@ -77,7 +77,7 @@ For numeric IDs:
 
 ```typescript
 // Route: /api/users/[id] or /api/users/<id>
-import { handleRoute, NumericalIdSchema } from "@workspace/api";
+import { handleRoute, NumericalIdSchema } from "@lib/lean-api";
 
 export const GET = handleRoute(
   async ({ params }) => {
@@ -93,7 +93,7 @@ export const GET = handleRoute(
 Use `QuerySchema` for pagination and filtering:
 
 ```typescript
-import { handleRoute, httpOkPage, QuerySchema, querySchemaToRange } from "@workspace/api";
+import { handleRoute, httpOkPage, QuerySchema, querySchemaToRange } from "@lib/lean-api";
 
 export const GET = handleRoute(
   async ({ query }) => {
@@ -121,7 +121,7 @@ Extend the default query schema with custom query parameters using `withDefaultQ
 
 ```typescript
 import { z } from "zod";
-import { handleRoute, httpOkPage, withDefaultQuerySchema, querySchemaToRange } from "@workspace/api";
+import { handleRoute, httpOkPage, withDefaultQuerySchema, querySchemaToRange } from "@lib/lean-api";
 
 // Define your custom query parameters
 const OrderQuerySchema = z.object({
@@ -161,7 +161,7 @@ Validate request bodies with custom Zod schemas:
 
 ```typescript
 import { z } from "zod";
-import { handleRoute, httpCreated, httpOk } from "@workspace/api";
+import { handleRoute, httpCreated, httpOk } from "@lib/lean-api";
 
 const CreateUserSchema = z.object({
   name: z.string().min(1),
@@ -193,7 +193,7 @@ You can use params, query, and body validation together:
 
 ```typescript
 import { z } from "zod";
-import { handleRoute, IdSchema, QuerySchema, httpOk } from "@workspace/api";
+import { handleRoute, IdSchema, QuerySchema, httpOk } from "@lib/lean-api";
 
 const UpdateSchema = z.object({
   name: z.string().min(1).optional(),
@@ -222,7 +222,7 @@ export const PATCH = handleRoute(
 Protect routes with authentication guards:
 
 ```typescript
-import { handleRoute, httpOk, httpError } from "@workspace/api";
+import { handleRoute, httpOk, httpError } from "@lib/lean-api";
 import { userGuard } from "./guards";
 
 export const GET = handleRoute(
@@ -244,7 +244,7 @@ export const GET = handleRoute(
 Check permissions on specific resources:
 
 ```typescript
-import { handleRoute, httpOk, IdSchema } from "@workspace/api";
+import { handleRoute, httpOk, IdSchema } from "@lib/lean-api";
 import { ownerOnlyGuard } from "./guards";
 
 export const DELETE = handleRoute(
@@ -273,7 +273,7 @@ export const DELETE = handleRoute(
 Create your own guards using `initGuards`:
 
 ```typescript
-import { initGuards } from "@workspace/api";
+import { initGuards } from "@lib/lean-api";
 
 interface AuthData {
   user?: { id: string; role: string };
@@ -320,7 +320,7 @@ import {
   httpCreated,
   httpDeleted,
   httpError,
-} from "@workspace/api";
+} from "@lib/lean-api";
 
 export const GET = handleRoute(async () => {
   return httpOk({ data: "success" }); // 200 OK
@@ -345,7 +345,7 @@ export const GET_ERROR = handleRoute(async () => {
 Return paginated data with metadata:
 
 ```typescript
-import { handleRoute, httpOkPage, QuerySchema } from "@workspace/api";
+import { handleRoute, httpOkPage, QuerySchema } from "@lib/lean-api";
 
 export const GET = handleRoute(
   async ({ query }) => {
@@ -374,7 +374,7 @@ export const GET = handleRoute(
 Serve files with proper headers:
 
 ```typescript
-import { handleRoute, httpOkDownload } from "@workspace/api";
+import { handleRoute, httpOkDownload } from "@lib/lean-api";
 
 export const GET = handleRoute(async () => {
   const fileBuffer = await readFile("report.pdf");
@@ -392,7 +392,7 @@ export const GET = handleRoute(async () => {
 Use custom HTTP error classes:
 
 ```typescript
-import { handleRoute, BadRequest, NotFound, Forbidden } from "@workspace/api";
+import { handleRoute, BadRequest, NotFound, Forbidden } from "@lib/lean-api";
 
 export const GET = handleRoute(async ({ params }) => {
   const { id } = params;
@@ -427,7 +427,7 @@ Handle multipart/form-data requests:
 
 ```typescript
 import { z } from "zod";
-import { handleRoute, httpCreated } from "@workspace/api";
+import { handleRoute, httpCreated } from "@lib/lean-api";
 
 const UploadSchema = z.object({
   file: z.instanceof(File),

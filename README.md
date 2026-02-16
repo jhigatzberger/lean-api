@@ -1,4 +1,4 @@
-# @workspace/api
+# lean-api
 
 A type-safe, lightweight API handler library for TypeScript that provides Zod validation, authentication guards, and response helpers for building robust REST APIs.
 

@@ -1,6 +1,6 @@
 # lean-api
 
-A type-safe, lightweight API handler library for TypeScript that provides Zod validation, authentication guards, and response helpers for building robust REST APIs.
+A type-safe, lightweight API handler library for Nextjs using TypeScript that provides Zod validation, authentication guards, and response helpers for building robust REST APIs.
 
 ## Features
 
